@@ -118,7 +118,7 @@
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>
-     <section class="content mt-4" v-if="currentUser.role!=='admin' ">
+     <section class="content mt-4" v-if="currentUser.role !== 'admin' ">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row" v-if="currentUser.user === 'chef de projet'">
@@ -276,7 +276,7 @@
              <div class="card">
               <div class="card-header ui-sortable-handle" style="cursor: move;">
                 <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1" v-if="$acces.Admin()"></i>
+                  <i class="ion ion-clipboard mr-1" v-if="currentUser.role==='admin'"></i>
                   Projects
                 </h3>
                 <div class="card-tools">
@@ -332,7 +332,7 @@
             <!-- /.card -->
           </section>
           <section class="col-lg-6">
-        <div class="card" v-if="currentUser.role !=='admin' && currentUser.role !=='chef de projet' && currentUser.role !=='client' ">
+        <div class="card" v-if="(currentUser.role !=='admin' && currentUser.role !=='chef de projet' && currentUser.role !=='client' )">
               <div class="card-header ui-sortable-handle" style="cursor: move;">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1" ></i>

@@ -40,7 +40,7 @@ class ReclamationController extends Controller
         }
       else  if ($user->role === 'client')
         {
-            $complain= Reclamation::where('client_id',Auth()->id())->latest()->paginate(5);
+            $complain= Reclamation::where('client_id',Auth()->id())->get();
             return response()->json([
                 "complain"=>$complain
              ]);
@@ -127,7 +127,7 @@ class ReclamationController extends Controller
         }
         else{
             $this->validate($request,[
-             'file' => 'required|mimes:doc,png,jpg,docx,txt|max:2048'
+             'file' => 'required|mimes:doc,png,jpg,docx,txt,pdf|max:2048'
               ]);
         $extention = time().'.'.$request->file->getClientOriginalExtension();
         $fileName ="complain".'.'.$extention;

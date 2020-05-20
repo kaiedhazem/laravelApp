@@ -5,7 +5,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title"> Complains:</h3>
-                <div class="card-tools" v-if="currentUser.role==='client'">
+                <div class="card-tools" v-if="currentUser.role === 'client'">
                 <button class="btn btn-success ml-6 mb-3" data-toggle="modal" data-target="#ajouterReclamation" ><i class="fas fa-user"></i> Create </button>
                 </div>
               </div>
@@ -16,14 +16,14 @@
                     <tr>
                       <th scope="col">Type</th>
                       <th scope="col">Description</th>
-                      <th v-if="currentUser.role!=='client'" scope="col"> Advancement </th>
-                      <th v-if="currentUser.role==='client'" scope="col"> Advancement </th>
+                      <th v-if="currentUser.role !== 'client'" scope="col"> Advancement </th>
+                      <th v-if="currentUser.role === 'client'" scope="col"> Advancement </th>
                       <th scope="col">Project</th>
-                      <th  scope="col">Created_at</th>
-                     <th v-if="currentUser.role !=='client'" scope="col"> client </th>
-                     <th v-if="currentUser.role!=='client'" scope="col">Assign to</th>
-                     <th v-if="currentUser.role==='admin' || currentUser.role==='chef de projet'" scope="col"> </th>
-                     <th v-if="currentUser.role==='admin' || currentUser.role==='chef de projet'" scope="col"> </th>
+                      <th  v-if="currentUser.role !== ('admin','chef de projet')" scope="col">Created_at</th>
+                     <th v-if="currentUser.role !== 'client' " scope="col"> client </th>
+                     <th v-if="currentUser.role !== 'client' " scope="col">Assign to</th>
+                     <th v-if="currentUser.role === 'admin' || currentUser.role === 'chef de projet' "  scope="col"> </th>
+                     <th v-if="currentUser.role === 'admin' || currentUser.role === 'chef de projet' " scope="col"> </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -35,7 +35,7 @@
                       <h6 v-if="reclamation.avancement != 'Pending Team leader validation'">  {{reclamation.avancement}}</h6>
                       </td>
                       <td>{{reclamation.nameProjet}}</td>
-                      <td v-if="!$acces.adminchef()">{{ reclamation.Created_at  | date }}</td>
+                      <td v-if="currentUser.role !== 'chef de projet' || currentUser.role !== 'chef de projet'">{{ reclamation.Created_at  | date }}</td>
                       <td v-if="currentUser.role !=='client'"> {{reclamation.nameClient}} </td>
                      <td v-if="currentUser.role==='admin' || currentUser.role==='chef de projet'">
                       <div class="dropdown">
@@ -51,10 +51,10 @@
                       <td v-for="membre in membres.User" :key="membre.id" v-if=" reclamation.employe_id == membre.id && currentUser.role !=='client' "><img class=" img-circle" :src="`/img/profile/${ membre.photo }`"
                       alt="User profile picture" style="width:35px;"><span class="ml-1" >{{ membre.name }}   </span>
                       </td>
-                      <td v-if="$acces.adminchef()">
-                        <a href="#" @click="Valider(reclamation.id)" v-if="reclamation.avancement == 'Pending Team leader validation' ">
+                      <td v-if="currentUser.role === 'admin' || currentUser.role === 'chef de projet'">
+                        <a href="#" @click="Valider(reclamation.id)" v-if="reclamation.avancement === 'Pending Team leader validation' ">
                           <i class="fas fa-check" style="font-size:28px;color:green"> </i> </a>
-                          <a href="#" @click="Alert(reclamation.id)" v-if="reclamation.avancement == 'Pending Team leader validation'">
+                          <a href="#" @click="Alert(reclamation.id)" v-if="reclamation.avancement === 'Pending Team leader validation'">
                           <i class="fas fa-times-circle" style="font-size:28px;color:red"></i>
                         </a>
                       <img :src="`/img/icon/verif.png`" style="width:40px;" v-if="reclamation.avancement == 'Finished'">

@@ -29,7 +29,7 @@
                        <router-link :to="`/client/${client.id}`" style="text-decoration:none; color:black;"> <td>{{ client.name }}</td></router-link>
                       <td >{{ client.email }}</td>
                       <td>{{ client.phone }}</td>
-                      <td>{{ client.created_at | date }}</td>
+                      <td>{{ client.created_at | datee }}</td>
                       <td>
                   <a href="#" class="btn " style="background-color: #00a8cc" @click="editClient(client)" ><i style="color: #fff" class="fas fa-user-edit"></i></a>
                  <a href="#" class="btn btn-danger" @click="deleteClient(client.id)"   ><i      class="fas fa-trash-alt"></i></a>
@@ -44,7 +44,7 @@
                <pagination :data="clients.client" @pagination-change-page="getResults"></pagination>
             </div>
         </div>
-         <div v-if="!$acces.Admin()">
+         <div v-if="currentUser.role !== 'admin'">
    <not-found></not-found>
  </div>
                <!-- Modal -->

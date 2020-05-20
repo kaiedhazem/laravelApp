@@ -37,27 +37,32 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 if(JSON.parse(localStorage.getItem('user')) !==null){
  window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: 'f7743dbe24762be70f10',
+    key: 'a551442057fe12ed4cce',
+    cluster: 'mt1',
+    encrypted : true,
+    //authEndpoint: 'http://localhost/broadcasting/auth',
+   
      auth:{
 
      headers: {
-        Authorization: 'Bearer ' +  JSON.parse(localStorage.getItem('user'))['token'] 
+        Authorization: 'Bearer ' +  JSON.parse(localStorage.getItem('user'))['token'] ,
+        Accept: 'application/json'
       }
     },
     
     
-    cluster: 'mt1',
-    encrypted : true
+    
    
  });
 }
 else {
  window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: 'f7743dbe24762be70f10',
+    key: 'a551442057fe12ed4cce',
  
     cluster: 'mt1',
-    encrypted : true
+    encrypted : true,
+    
    
  });
 }

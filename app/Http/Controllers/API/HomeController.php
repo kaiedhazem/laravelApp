@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth:api',['expect'=>['index']]);
+   //$this->middleware('jwt.auth',['expect'=>['index']]);
     }
     /**
      * Show the application dashboard.
@@ -21,7 +21,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    { //  $user=Auth('api')::user();
+    {  
         return view('home');
     }
 }

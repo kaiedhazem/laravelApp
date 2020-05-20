@@ -46,7 +46,7 @@ class UserController extends Controller
             'password' => $request->password,
             'role'  => "chef de projet"
         );
-
+        Mail::to($request->email)->send(new loginMail($data));
         return User::create([
             'name' => $request->name,
            'email'=> $request->email,
@@ -56,7 +56,7 @@ class UserController extends Controller
 
        ]);
 
-        Mail::to($request->email)->send(new loginMail($data));
+     
    return response()->json([
        "action"=>"Team Leader added"
    ]);

@@ -174,12 +174,24 @@ class ProjetController extends Controller
         "user"=>$user
     ]);
     }
-
+    public function notif()
+    {
+        $user= Auth()->user()->unreadNotifications;
+    return response([
+        "notification"=>$user
+    ]);
+    }
     public function adminp(){
       $projet =Projet::all();
       return response()->json([
           "projets"=>$projet
       ]);
+   }
+   public function MarkUnread(){
+    Auth()->user()->unreadNotifications->markAsRead();
+    return response([
+        "Notification mark Us read"
+    ]);
    }
 
 }

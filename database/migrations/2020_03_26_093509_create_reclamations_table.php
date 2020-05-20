@@ -23,6 +23,15 @@ class CreateReclamationsTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->foreign('employe_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('projet_id');
+            $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
+            $table->string('nameProjet');
+            $table->unsignedBigInteger('chef_id')->nullable();
+            $table->foreign('chef_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('nameClient');
+            $table->string('nameEmp')->nullable();
+            $table->double('progress')->nullable();
+            $table->string('file')->nullable();
         });
     }
 

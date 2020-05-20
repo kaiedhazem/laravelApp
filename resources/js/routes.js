@@ -42,7 +42,8 @@ export const routes = [
     {path: '/login', component: Login,meta: {requiresAuth: false}
    
  },
-   {path: '*' , component:    require('./components/404.vue').default },
+   {path: '*' , name:'not-found' ,component:    require('./components/404.vue').default },
+   
 
 
   ];

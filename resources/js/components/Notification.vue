@@ -1,14 +1,17 @@
 <template>
 <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item dropdown">
+                    
                    <a class="nav-link" data-toggle="dropdown"  href="#" @click="MarkNotificationAsRead()">
-                     <i class="fa fa-bell" style='font-size:30px;' v-if="`${unreadNotifications.length}`!=0"></i>
-                    <i class='fas fa-bell-slash' style='font-size:30px' v-if="`${unreadNotifications.length}`==0"></i>
-                    <span class="badge badge-danger navbar-badge" v-if="`${unreadNotifications.length}`!=0">{{unreadNotifications.length}}</span>
+                     <i class="fa fa-bell" style='font-size:30px;' v-if="`${unreadNotifications.notification.length}`!=0"></i>
+                    <i class='fas fa-bell-slash' style='font-size:30px' v-if="`${unreadNotifications.notification.length}`==0"></i>
+                    <span class="badge badge-danger navbar-badge" v-if="`${unreadNotifications.notification.length}`!=0">{{unreadNotifications.notification.length}}</span>
                    </a>
                  <div class="dropdown-menu dropdown-menu-right">
+                     <audio id="notify_audio"> <source :src="`/audio/notify.mp3`" >
+                      </audio>
                         <a v-if="`${unreadNotifications.length}`==0" class="dropdown-item"><strong>No notifications</strong></a>
-                    <div v-for="unread in unreadNotifications" :key="unread.id">
+                    <div v-for="unread in unreadNotifications.notification" :key="unread.id">
                             <li v-if=" unread.data.typeNotification === 'App\\Notifications\\NewProject'" >
                             <router-link :to="`/detail/${unread.data.idprojet}  `" class="dropdown-item" >
                             <i class="fas fa-user-shield"></i>
@@ -91,27 +94,39 @@
 
 </template>
 <script>
+
     export default {
-      props :['unreads','userid'],
+    
       data (){
        return {
-           unreadNotifications: this.unreads,      }
+           unreadNotifications: {
+               notification: {},
+           },     
+          user:JSON.parse(localStorage.getItem('user')),
+            }
       },
+  
       methods:{
  MarkNotificationAsRead() {
-  if(this.unreadNotifications.length){
-    axios.post('/markAsRead')
+  if(this.unreadNotifications.notification.length){
+         
+    axios.post('/api/markAsRead');
   }
 }
       },
+            
         mounted() {
-           Echo.private('App.User.'+ this.userid)
+           Echo.private('App.User.'+ this.$store.getters.currentUser.id)
     .notification((notification) => {
         console.log(notification);
   let newUnreadNotifications={data:{idprojet:notification.idprojet,user:notification.user,projet:notification.projet,idrec:notification.idrec,type:notification.type,typeNotification:notification.typeNotification,idTask:notification.idTask,task:notification.task}};
-  this.unreadNotifications.push(newUnreadNotifications);
-document.getElementById("notify_audio").play();
+  this.unreadNotifications.notification.push(newUnreadNotifications);
+  document.getElementById("notify_audio").play();
     });
+        },
+        created(){
+            
+            axios.get('/api/notification').then(({ data }) =>(this.unreadNotifications = data));
         }
     }
 </script>

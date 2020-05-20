@@ -18,8 +18,7 @@ window.Form=Form;
 Vue.use(VueRouter)
 Vue.component('Notification' ,require('./components/Notification.vue').default);
 const store = new Vuex.Store(StoreData);
-import Acces from './Acces'
-Vue.prototype.$acces = new Acces(window.user);
+
 import 'fullcalendar/dist/fullcalendar.css'
 import FullCalendar from 'vue-full-calendar'
 import Print from 'vue-print-nb'

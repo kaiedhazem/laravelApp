@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="!$acces.Admin()">
+    <div class="container" v-if="currentUser.role !== 'admin'">
         <div class="row justify-content-center">
 
             <div class="col-md-12"  >
@@ -61,7 +61,7 @@
                <strong><i class="fas fa-phone mr-1"></i>phone</strong>
 
                 <p class="text-muted">
-                <strong>   {{ user.tel  }}</strong>
+                <strong>   {{ user.phone  }}</strong>
                 </p>
 
                 <hr>
@@ -285,6 +285,11 @@
    this.afficherMembre();
 
     },
+      computed: {
+            currentUser() {
+                return this.$store.getters.currentUser
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         }

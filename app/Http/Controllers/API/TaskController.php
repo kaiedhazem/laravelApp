@@ -16,12 +16,13 @@ class TaskController extends Controller
 	//
 	public function __construct()
     {
-	//  $this->middleware('auth:api');
+	// $this->middleware('auth:api');
         //    $this->authorizeResource('Chef');
     }
     public function store(Request $request){
 	//	$this->authorize('Admin');
 	//if (Gate::authorize('Admin')){
+	//if (auth()->user()->role === "admin" || auth()->user()->role === "admin" ) {
 	    $task = new Task();
         $task->projet_id=$request->key;
 		$task->text = $request->text;
@@ -35,6 +36,7 @@ class TaskController extends Controller
 			"action"=> "inserted",
 			"tid" => $task->id
 		]);
+	// }
 	}
 	public function update($id, Request $request){
 

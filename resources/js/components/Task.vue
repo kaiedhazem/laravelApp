@@ -40,7 +40,7 @@
                       <td>{{ task.created_at  | date }} </td>
 
                         <td>
-    <div class="dropdown"v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
+    <div class="dropdown" v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    <i class="fas fa-user-plus" style="color:#05dfd7;"></i>
    </a>
@@ -68,7 +68,7 @@
               <pagination :data="tasks.Tasks" @pagination-change-page="getResults"></pagination>
             </div>
         </div>
-         <div v-if="$acces.client()">
+         <div v-if="currentUser.role==='clien'">
    <not-found></not-found>
  </div>
                <!-- Modal -->

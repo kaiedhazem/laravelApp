@@ -4,8 +4,8 @@
       <div class="col-md-9 mt-4">
                <div class="card card-default">
           <div class="card-header" >
-            <h3 v-if="$acces.client()" class="card-title">Your reclamation :</h3>
-             <h3 v-if="!$acces.client()" class="card-title"> Complaint processed:</h3>
+            <h3 v-if="currentUser.role==='client'" class="card-title">Your reclamation :</h3>
+             <h3 v-if="currentUser.role!=='client'" class="card-title"> Complaint processed:</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool"  id="reduit" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
             </div>
@@ -31,7 +31,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-sm-6" v-if="!$acces.client()">
+                <div class="col-12 col-sm-6" v-if="currentUser.role!=='client'">
                   <div class="info-box bg-light">
                     <div class="info-box-content">
                       <span class="info-box-text text-center">Membre assigned:</span>
@@ -47,7 +47,7 @@
                     </div>
                   </div>
                 </div>
-                  <div class="col-12 col-sm-6" v-if="!$acces.client()">
+                  <div class="col-12 col-sm-6" v-if="currentUser.role!=='client'">
                   <div class="info-box bg-light">
                     <div class="info-box-content">
                       <span class="info-box-text text-center">Client claimed:</span>
@@ -76,15 +76,15 @@
               </ul>
            </div>
                <h4 class="info-box-text"> Advancement:</h4>
-                 <p v-if="$acces.client() && reclamation.avancement == 'Pending Team leader validation' "> In progress  </p>
-                 <p v-if="$acces.client() && reclamation.avancement != 'Pending Team leader validation'"> {{ reclamation.avancement }}  &nbsp; &nbsp;
+                 <p v-if="currentUser.role==='client' && reclamation.avancement == 'Pending Team leader validation' "> In progress  </p>
+                 <p v-if="currentUser.role==='client' && reclamation.avancement != 'Pending Team leader validation'"> {{ reclamation.avancement }}  &nbsp; &nbsp;
                    <img :src="`/img/icon/verif.png`" style="width: 30px;" v-if="reclamation.avancement == 'Finished'"> </img> </p>
-                 <p v-if="!$acces.client()">{{ reclamation.avancement }} &nbsp; &nbsp;
+                 <p v-if="currentUser.role!=='client'">{{ reclamation.avancement }} &nbsp; &nbsp;
                    <img :src="`/img/icon/verif.png`" style="width: 30px;" v-if="reclamation.avancement == 'Finished'"> </img> </p>
              <div class="progress">
               <div class="progress-bar progress-bar-striped bg-success" role="progressbar"  :style=" {'width': `${parseInt(reclamation.progress)}%`}" aria-valuenow="`${parseInt(reclamation.progress)}`" aria-valuemin="0" aria-valuemax="100"> {{reclamation.progress}} %</div>
              </div> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; <br>
-                 <button v-if="!$acces.NotUser() && reclamation.avancement != 'Finished'" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modifierReclamation" @click="idReclamation(reclamation.id)"  >Edit Advancement</button>
+                 <button v-if="(currentUser.role!=='admin' && currentUser.role!=='client' &&  currentUser.role!=='chef de projet')  && reclamation.avancement != 'Finished'" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modifierReclamation" @click="idReclamation(reclamation.id)"  >Edit Advancement</button>
              </div>
               </div>
              </div>
@@ -101,15 +101,15 @@
                  <p>{{ reclamation.nameProjet }}</p>
                   <label> Description:</label>
                  <p>{{ reclamation.description }}</p>
-                <label v-if="!$acces.client()"> Membre assigned  </label>
-                <p v-if="!$acces.client()">{{ reclamation.nameEmp }}</p>
+                <label v-if="currentUser.role!=='client'"> Membre assigned  </label>
+                <p v-if="currentUser.role!=='client'">{{ reclamation.nameEmp }}</p>
                  <label> Advancement:</label>
                  <p>{{ reclamation.avancement }} &nbsp;   <img :src="`/img/icon/verif.png`" style="width: 30px;" v-if="reclamation.avancement == 'Finished'"> </img>
                  </p>
                  <label > creation date:</label>
                <p>{{ reclamation.created_at | date }}</p>
-                  <label v-if="!$acces.client()" >Client claimed:</label>
-                <p v-if="!$acces.client()">{{ reclamation.nameClient}}</p>
+                  <label v-if="currentUser.role!=='client'" >Client claimed:</label>
+                <p v-if="currentUser.role!=='client'">{{ reclamation.nameClient}}</p>
                      </div>
                           <!-- /.form-group -->
               </div>
@@ -224,9 +224,16 @@ mounted() {
   this.afficherReclamation();
  fire.$on('modifierreclamation',()=>{
                      this.afficherReclamation();
+
                  });
-}
-}
+},
+                    computed: {
+            currentUser() {
+                return this.$store.getters.currentUser
+            }
+
+
+}}
 </script>
 <style lang="css" scoped>
 .card-header{

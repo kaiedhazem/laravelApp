@@ -50,7 +50,7 @@
         </div>
 
         <!-- Modal -->
- <div v-if="!$acces.Admin()">
+ <div v-if="currentUser.role !== 'admin'">
      <not-found></not-found>
      </div>
     <form @submit.prevent="x ? misajour(): ajouterMembre()">

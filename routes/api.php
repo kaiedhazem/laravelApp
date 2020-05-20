@@ -17,7 +17,7 @@ Route::group([
 
 //  'middleware' => 'api',
  // 'namespace' => 'App\Http\Controllers',
-  'prefix' => 'auth'
+ 'prefix' => 'auth'
 
 ], function ($router) {
 
@@ -27,12 +27,19 @@ Route::group([
   Route::post('me', 'AuthenController@me');
   Route::get('/me','API\AuthenController@me');
 });
+Route::group(['middleware' => ['jwt.auth']], function () {
+    
+
+    
+
 Route::get('/notif','API\ProjetController@notifications');
+Route::get('/notification','API\ProjetController@notif');
 Route::get('/me','API\AuthenController@guard');
 Route::post('/login','API\AuthenController@login');
 Route::post('/userauth','API\AuthenController@userauth');
-//Route::group(['middleware' => 'jwt.auth'], function ($router) {
-//User
+Route::post('/markAsRead','API\ProjetController@MarkUnread') ;
+  
+   
 Route::apiResource('client' ,'API\UserController@dashbord');
 Route::get('membrep','API\UserController@Membreprojet');
 Route::get('/chef', 'API\UserController@chef');
@@ -138,3 +145,4 @@ Route::get('/data/{id}', 'API\GanttController@get');
 
 Route::get('/data', 'GanttController@get');
 
+});

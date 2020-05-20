@@ -8,6 +8,7 @@
 <script>
 
     export default {
+      
         name: 'boss',
         //components: {Header}
     }

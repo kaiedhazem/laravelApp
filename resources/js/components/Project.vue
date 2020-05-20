@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
            <div class="col-sm-12 mt-4" >
-            <div class="card" >
+            <div class="card" v-if="currentUser.role==='admin'">
               <div class="card-header">
                 <h3 class="card-title"> Projects:</h3>
                 <div class="card-tools">
@@ -70,7 +70,7 @@
             <pagination :data="projets.projets" @pagination-change-page="getResults"></pagination>
             </div>
         </div>
- <div >
+ <div v-if="currentUser.role !== 'admin'">
    <not-found></not-found>
  </div>
         <div class="modal fade" id="AjouterProjet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -345,6 +345,11 @@ import { setAuthorization } from "../helpers/general";
 
 
                       },
+                        computed: {
+            currentUser() {
+                return this.$store.getters.currentUser
+            }
+        },
             name:'project'
            }
 

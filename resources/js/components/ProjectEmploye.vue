@@ -2,11 +2,11 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 mt-4">
-        <div class="card"  v-if="!$acces.Admin()">
+        <div class="card"  v-if="currentUser.role !== 'admin'">
           <div class="card-header">
             <h3 class="card-title"> Projects:</h3>
 
-            <div class="card-tools" v-if="$acces.Chef()">
+            <div class="card-tools" v-if="currentUser.role === 'chef de projet'">
               <button class="btn btn-success ml-6 mb-3"  @click="newer" ><i class="fas fa-project-diagram"></i> Add</button>
               <div class="input-group input-group-sm" style="width: 150px;"></div>
             </div>
@@ -22,7 +22,7 @@
                   <th>Avancemant</th>
                   <th>Description</th>
                   <th>Budget</th>
-                  <th v-if="$acces.Chef()">Operation</th>
+                  <th v-if="currentUser.role === 'chef de projet'">Operation</th>
 
 
                 </tr>
@@ -46,7 +46,7 @@
 
 
                   <td >{{projet.budget}}</td>
-                           <td v-if="$acces.Chef()"><a href="#" class="btn" @click="editProjet(projet)"  style="background-color: #00a8cc"><i style="color:#fff" class="fas fa-user-edit"></i></a>
+                           <td v-if="currentUser.role === 'chef de projet'"><a href="#" class="btn" @click="editProjet(projet)"  style="background-color: #00a8cc"><i style="color:#fff" class="fas fa-user-edit"></i></a>
                            <a href="#" class="btn btn-danger" @click="deleteProjet(projet.id)" ><i class="fas fa-trash-alt"></i></a></td>
 
                       <!-- Modal -->
@@ -78,7 +78,7 @@
           <!-- /.card-body -->
         </div>
       </div>
-<div v-if="$acces.Admin()">
+<div v-if="currentUser === 'admin'">
    <not-found></not-found>
 </div>
 
@@ -239,7 +239,7 @@ export default {
                 $("#AjouterProjet").modal('hide');
                 Toast.fire({
                         icon: 'success',
-                        title: 'Projet Ajouter'
+                        title: 'Projet Added'
 
                 })
 
@@ -252,8 +252,8 @@ export default {
                     },
              deleteProjet(id){
            seww.fire({
-            title: 'Êtes-vous sûr?',
-            text: "Vous ne pourrez pas revenir en arrière!",
+            title: 'Are you sure?',
+            text: "You  can't come back!",
             icon: 'warning',
 
             showCancelButton: true,
@@ -265,8 +265,8 @@ export default {
                     this.form.delete('api/projet/' + id).then(function(){
 
                     seww.fire(
-                    'Supprimer!',
-                    'Le projet est supprimer.',
+                    ' Delete!',
+                    ' Project deleted.',
                     'success'
                     )
 
@@ -274,7 +274,7 @@ export default {
 
                 }).catch(()=>{
                     seww.fire(
-                    'Échec !!!!'
+                    'Failed !!!!'
 
 
                     );
@@ -335,7 +335,9 @@ export default {
 
   },
   computed:{
-
+ currentUser() {
+                return this.$store.getters.currentUser
+            }
 
   },
   name:'projectemploye'

@@ -35,9 +35,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-         
-    </ul>
+       <ul class="navbar-nav ml-auto">
+
+
+      <!-- Notifications Dropdown Menu -->
+    <Notification> </Notification>
+    
+</ul>
+    
 </nav>
 
   <!-- /.navbar -->
@@ -55,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img :src="`/img/profile/${ currentUser.photo}`" class="img-circle elevation-2" alt="User Image">
+          <img :src="`/img/profile/${ aut.user.photo}`" class="img-circle elevation-2" alt="User Image">
 
   </div>
         <div class="info">
@@ -69,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
               some or any other icon font library -->
 
-               <li class="nav-item">
+               <li class="nav-item" v-show="currentUser.role !== 'admin'">
                <router-link :to="`/profile/${currentUser.id}`" class="nav-link">
                  <i class="fas fa-user" style="color:#05dfd7" ></i>
                       <p>
@@ -103,13 +108,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </p>
         </a>
         <ul class="nav nav-treeview"   >
-          <li class="nav-item" v-for="(projet,index) in projets" :key="index" v-if="currentUser.role!=='admin' ">
+          <li class="nav-item" v-for="projet in projets" :key="projet.id" v-if="currentUser.role !=='admin' ">
             <router-link :to="`/task/${projet.id}`" class="nav-link ">
               <i class="fas fa-circle" style="color:#05dfd7"> </i>
               <p>Tasks :{{ projet.name }}  </p>
             </router-link>
           </li>
-           <li class="nav-item" v-for="projet in projects.projets" :key="projet.id" v-show="currentUser.role==='admin'">
+           <li class="nav-item" v-for="projet in projects.projets" :key="projet.id" v-if="currentUser.role==='admin'">
             <router-link :to="`/task/${projet.id}`" class="nav-link ">
               <i class="fas fa-circle" style=":#05dfd7"> </i>
               <p>Tasks :{{ projet.name }}  </p>
@@ -129,13 +134,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
            </a>
 
         <ul class="nav nav-treeview">
-             <li class="nav-item"  v-for="(projet,index) in projets" :key="index" v-if="currentUser.role!=='admin' ">
+             <li class="nav-item"  v-for="(projet,index) in projets" :key="index" v-if="currentUser.role !=='admin' ">
                <router-link :to="`/gantt/${projet.id}`" class="nav-link ">
                  <i class="far fas fa-circle"  style="color:#05dfd7"></i>
                  <p>Gantt : {{ projet.name }}  </p>
                </router-link>
              </li>
-                <li class="nav-item" v-for="projet in projects.projets" :key="projet.id" v-show="currentUser.role==='admin'">
+                <li class="nav-item" v-for="projet in projects.projets" :key="projet.id" v-if="currentUser.role==='admin'">
             <router-link :to="`/gantt/${projet.id}`" class="nav-link ">
               <i class="fas fa-circle" style="color:#05dfd7"> </i>
               <p>Gantt:{{ projet.name }}  </p>
@@ -155,7 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                </router-link>
           </li>
 
-          <li class="nav-item" v-if="currentUser.role ==='admin' || currentUser.role==='chef de projet' ">
+          <li class="nav-item" v-if="currentUser.role ==='admin' || currentUser.role === 'chef de projet' ">
             <router-link to="/membre" class="nav-link">
            <i class="fas fa-users" style="color:#05dfd7" ></i>
               <p>
@@ -164,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
-       <li class="nav-item"  v-show="currentUser.role==='admin' || currentUser.role==='chef de projet' ">
+       <li class="nav-item"  v-show="currentUser.role === 'admin' ">
             <router-link to="/client" class="nav-link">
          <i class="fas fa-user" style="color:#05dfd7" ></i>
               <p>
@@ -173,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="currentUser.role !== 'client'" > 
             <router-link to="/calendrier" class="nav-link">
              <i class="fas fa-calendar-plus" style="color:#05dfd7" ></i>
               <p>
@@ -192,7 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/setting" class="nav-link">
+            <router-link to="/setting" class="nav-link" v-show="currentUser.role==='admin'" >
            <i class="fas fa-cogs" style="color:#05dfd7" ></i>
               <p>
                Setting
@@ -268,10 +273,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     export default {
         name: 'main-app',
+      
         data(){
             return{
 
-            aut:[],
+            aut: {
+                user:{},
+            },
+            notifications:{
+            notification: {},
+            },
               projets:{},
                 user:JSON.parse(localStorage.getItem('user')),
               projet:{
@@ -305,6 +316,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   axios.get('/api/projetadmin',axiosConfig).then(({ data }) =>(this.projects = data));
                 },
         },
+             
+        
       computed: {
             currentUser() {
                 return this.$store.getters.currentUser
@@ -314,6 +327,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             this.afficherProjet();
             this.afficherProjeta();
            axios.get('/api/notif').then(({ data }) =>(this.aut = data));
+            axios.get('/api/notification').then(({ data }) =>(this.notifications = data));
         }
     }
 </script>

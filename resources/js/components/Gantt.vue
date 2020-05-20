@@ -1,7 +1,7 @@
 <template>
 <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12" v-if="currentUser.role!=='client'">
+            <div class="col-md-12" v-if="currentUser.role !== 'client'">
                 <div class="card mr-9">
 
              <form @submit.prevent="Setid()">
@@ -14,7 +14,7 @@
              </div>
             </div>
         </div>
-             <div v-if="$acces.client()">
+             <div v-if="currentUser.role==='client'">
    <not-found></not-found>
  </div>
     </div>

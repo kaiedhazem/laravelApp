@@ -17,8 +17,13 @@ class CreateFileTable extends Migration
             $table->bigIncrements('id');
             $table->string('file')->nullable();
             $table->unsignedBigInteger('projet_id')->nullable();
+           $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
+           $table->unsignedBigInteger('task_id')->nullable();
 
-            $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->unsignedBigInteger('rec_id')->nullable();
+
+            $table->foreign('rec_id')->references('id')->on('reclamations')->onDelete('cascade');
             $table->timestamps();
         });
     }
