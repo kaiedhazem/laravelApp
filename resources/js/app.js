@@ -22,7 +22,7 @@ const store = new Vuex.Store(StoreData);
 import 'fullcalendar/dist/fullcalendar.css'
 import FullCalendar from 'vue-full-calendar'
 import Print from 'vue-print-nb'
-
+Vue.component('not-found' , require('./components/404.vue').default);
 
 Vue.use(Print);
 /**npm instal
@@ -67,7 +67,7 @@ const Toast = seww.mixin({
 window.fire =new Vue();
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.filter('date',function(datee){
-return moment(datee).format('MMMM Droutes o YY');
+  return moment(datee).format('DD-MM-YYYY');
 });
 
 /**

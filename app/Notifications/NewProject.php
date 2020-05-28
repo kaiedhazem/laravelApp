@@ -38,7 +38,7 @@ class NewProject extends Notification implements ShouldQueue
     {
         return (new MailMessage)
         ->line('New Project :' . $this->data['projet'])
-        ->action('Notification Action', url('/detail/'.$this->data['id']))
+        ->action('New project', url('/detail/'.$this->data['id']))
         ->line('Thank you for using our application!');
     }
     /**

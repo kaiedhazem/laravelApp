@@ -40,7 +40,7 @@ class ReclamationController extends Controller
         }
       else  if ($user->role === 'client')
         {
-            $complain= Reclamation::where('client_id',Auth()->id())->get();
+            $complain= Reclamation::where('client_id',Auth()->id())->latest()->paginate(8);
             return response()->json([
                 "complain"=>$complain
              ]);
@@ -250,5 +250,17 @@ class ReclamationController extends Controller
         $reclamation=Reclamation::find($id);
         $reclamation->delete();
         return ["result" => "Complain Deleted"];
+    }
+    public function reclamationmobile(){
+        $user= Auth()->user();
+       
+       if ($user->role === 'client')
+        {
+            $complain= Reclamation::where('client_id',Auth()->id())->get();
+            return response()->json([
+                "complain"=>$complain
+             ]);
+        }
+    
     }
 }

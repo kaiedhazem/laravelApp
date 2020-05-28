@@ -39,7 +39,7 @@ class TaskController extends Controller
 	// }
 	}
 	public function update($id, Request $request){
-
+		
 		$task = Task::find($id);
 		$task->text = $request->text;
 		$task->start_date = $request->start_date;
@@ -50,7 +50,7 @@ class TaskController extends Controller
 			$this->updateOrder($id, $request->target);
 		}
         $task->save();
-
+		
         $tasks =Task::where('projet_id',$request->key)->get();
         $progress=0;
         $n=0;

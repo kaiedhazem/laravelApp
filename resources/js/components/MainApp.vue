@@ -9,8 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>#######</title>
+<link rel="shortcut icon" href="/img/icon/logo1.png">
+  <title>Project Management</title>
 
  <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="/css/app.css">
@@ -50,11 +50,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
     <router-link to="/home" class="brand-link">
-
-      <span class="brand-text font-weight-light">######</span>
+ 
+ <img src="/img/icon/logo1.png"  class="img-circle elevation-2" alt="User Image">
+ <span class="brand-text font-weight-light">Project Management</span>
     </router-link>
-
+</div>
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->

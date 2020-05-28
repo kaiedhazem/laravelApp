@@ -10,7 +10,7 @@
                  <div class="dropdown-menu dropdown-menu-right">
                      <audio id="notify_audio"> <source :src="`/audio/notify.mp3`" >
                       </audio>
-                        <a v-if="`${unreadNotifications.length}`==0" class="dropdown-item"><strong>No notifications</strong></a>
+                        <a v-if="`${unreadNotifications.notification.length}`==0" class="dropdown-item"><strong>No notifications</strong></a>
                     <div v-for="unread in unreadNotifications.notification" :key="unread.id">
                             <li v-if=" unread.data.typeNotification === 'App\\Notifications\\NewProject'" >
                             <router-link :to="`/detail/${unread.data.idprojet}  `" class="dropdown-item" >

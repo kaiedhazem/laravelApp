@@ -27,7 +27,7 @@ Route::group([
   Route::post('me', 'AuthenController@me');
   Route::get('/me','API\AuthenController@me');
 });
-Route::group(['middleware' => ['jwt.auth']], function () {
+
     
 
     
@@ -120,6 +120,7 @@ Route::post('/type' ,'API\ReclamationController@type');
 Route::get('/type','API\ReclamationController@gettype');
 Route::post('/reclamationTerm/{id}','API\ReclamationController@terminerReclamation');
 Route::post('/reclamationAlert/{id}','API\ReclamationController@alertReclamation');
+Route::get('/reclamationmobile','API\ReclamationController@reclamationmobile');
 //profil
 Route::put('profile', 'API\UserController@updateProfile');
 Route::get('membrechef','API\UserController@Membrechefprojet');
@@ -145,4 +146,3 @@ Route::get('/data/{id}', 'API\GanttController@get');
 
 Route::get('/data', 'GanttController@get');
 
-});

@@ -263,7 +263,7 @@
                         </div>
                       </td>
                       <td><span v-if="`${parseInt(stat.progress)}`==100" class="badge bg-success" >{{ parseInt(stat.progress) }}%</span>
-                      <span v-if="`${parseInt(stat.progress)}!=100`" class="badge bg-danger" >{{ parseInt(stat.progress) }}%</span></td>
+                      <span v-if="`${parseInt(stat.progress)}`!=100" class="badge bg-danger" >{{ parseInt(stat.progress) }}%</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -322,7 +322,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix" v-if="currentUser.role!=='client'">
-                <pagination :data="Ustats.projectstat" @pagination-change-page="getResults1"></pagination>
+                <pagination :data="Cprojets.projects" @pagination-change-page="getResults1"></pagination>
              </div>
               <div class="card-footer clearfix" v-if="currentUser.role==='client'">
                 <pagination :data="Cprojets.projects" @pagination-change-page="getResults2"></pagination>
@@ -440,7 +440,7 @@
                  getResults2(page = 1) {
       			axios.get('api/Cprojets?page=' + page)
 				.then(response => {
-				this.Utasks = response.data;
+				this.Cprojets= response.data;
                 });},
 
  },

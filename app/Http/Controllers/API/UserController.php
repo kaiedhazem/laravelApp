@@ -7,6 +7,8 @@ use App\Projet;
 use App\Mail\loginMail;
 use App\Mail\ClientMail;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\UpdateData;
+use Illuminate\Support\Facades\Notification;
 use DB;
 class UserController extends Controller
 {
@@ -186,6 +188,14 @@ class UserController extends Controller
                }
                else {
               DB::table('users')->where('id',$id)->update(['name'=>$data['name'],'email'=>$data['email'],'password'=>bcrypt($data['password']),'phone'=>$data['phone'],'role'=>$data['role']]);
+               }
+               if (($data['password'] !== null) || ($data['email'] !== null)){
+                $data = array(
+                    'email' => $data['email'],
+                    'password' => $data['password'],
+                   );
+                   $when = now()->addSeconds(10);
+                   Notification::send( $user,(new UpdateData ($data))->delay($when));
                }
     }
     public function chefprojet(){
