@@ -1,10 +1,10 @@
 @component('mail::message')
-# L'equipe de ########
+<b>Project Management Team</b>
 
-Bienvenue parmi notre equipe de Travail
-<p>Votre login est:{{ $data['login'] }}</p>
-<p>Votre Mot de passe est:{{ $data['password'] }}</p>
-<p>Votre role dans notre projet est:{{ $data['role']}}</p>
+Welcome to our Work Team
+<p>Your login is  : {{ $data['login'] }}</p>
+<p>Your Password is : {{ $data['password'] }}</p>
+<p> Your role in our project is : {{ $data['role']}} </p>
 
 
 Thanks,<br>

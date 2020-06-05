@@ -256,10 +256,10 @@ import { setAuthorization } from "../helpers/general";
                   axios.get('/api/projet',axiosConfig).then(({ data }) =>(this.projets = data));
                 },
                ajouterProjet(){
-                     this.$Progress.start()
+                    // this.$Progress.start()
                 this.form.post("api/projet").then(()=>this.form.post('api/chefdeprojet').then(()=>this.form.post('api/userprojet').then(()=>{
                 fire.$emit('ajoutprojet');
-                this.$Progress.finish()
+               //s this.$Progress.finish()
                 this.form.reset();
                 $("#AjouterProjet").modal('hide');
                 Toast.fire({

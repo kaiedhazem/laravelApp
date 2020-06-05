@@ -27,14 +27,14 @@
                                 </li>
 
                         <li v-if="unread.data.typeNotification == 'App\\Notifications\\reclamationAssigned'">
-                        <router-link :to="`/detailleReclamation/${unread.data.idrec}  `" class="dropdown-item" >
+                        <router-link :to="`/detailleReclamation/${unread.data.idrec}`"  class="dropdown-item" >
                         <i class="fas fa-exclamation"></i>
                          <span class=""></span> New {{unread.data.projet}} Reclamation
                         </router-link>
                             </li>
 
                          <li v-if="unread.data.typeNotification == 'App\\Notifications\\NewProjectCommentaire'">
-                        <router-link :to="`/detail/${unread.data.idprojet}  `" class="dropdown-item" >
+                        <router-link :to="`/detail/${unread.data.idprojet} `"  class="dropdown-item" >
                         <i class="fas fa-comments"></i>
                             <span class=""></span> New commentaire of {{unread.data.projet}}
                         </router-link>

@@ -14,7 +14,8 @@
               </div>
               <!-- /.card-header -->
              <form >
-              <div class="card-body table-responsive p-0">
+              
+   
                 <table class="table table-hover" >
                   <thead>
                     <tr>
@@ -32,7 +33,7 @@
                       --><td>
                             <a  data-toggle="collapse" :data-target="'#demo' + task.id " >
                                         <span class="badge pull-right"><i class="fa fa-plus"></i></span></a>
-                                        {{ task.text }}
+                               <router-link :to="`/taskdetail/${task.id}`"   style="text-decoration:none; color:black;">  {{ task.text }} </router-link>
                               </td>
                       <td >{{ parseInt(100 * task.progress) }}% <img :src="`/img/icon/verif.png`" style="width:15px;" v-if="`${parseInt(100 * task.progress)}`==100" > </img> <div class="progress">
                         <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0"   id="progress" v-model="form.progress"
@@ -42,7 +43,7 @@
                       <td>{{ task.duration  }} day(s)</td>
                       <td>{{ task.created_at  | date }} </td>
 
-                        <td>
+                        <td v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
                                <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-user-plus" style="color:#05dfd7;">
 
@@ -63,7 +64,7 @@
                     </tr>
 
                     <tr class="collapse" :id="'demo'+task.id"  v-for="taske in tasks.Tasks.data "  v-if="taske.parent===task.id && taske.projet_id == key "  >
-                    <td >{{ taske.text }}</td>
+                    <router-link :to="`/taskdetail/${taske.id}`"   style="text-decoration:none; color:black;"> <td > {{ taske.text }} </td> </router-link>
                       <td >{{ parseInt(100 * taske.progress) }}% <img :src="`/img/icon/verif.png`" style="width:15px;" v-if="`${parseInt(100 * taske.progress)}`==100" > </img> <div class="progress">
                         <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0"   id="progress" v-model="form.progress"
                         aria-valuemin="$`{parseInt(100 * task.progress)}`" :style=" {'width':`${parseInt(100 * taske.progress)}%`}" aria-valuemax="100"></div>
@@ -72,7 +73,7 @@
                       <td>{{ taske.duration  }} day(s)</td>
                       <td>{{ taske.created_at  | date }} </td>
 
-                        <td>
+                        <td v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
                                <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-user-plus" style="color:#05dfd7;">
 
@@ -95,14 +96,14 @@
                    </tbody>
 
                 </table>
-              </div>
+             
               </form>
 
               </div>
               <pagination :data="tasks.Tasks" @pagination-change-page="getResults"></pagination>
             </div>
         </div>
-         <div v-if="currentUser.role==='clien'">
+         <div v-if="currentUser.role==='client'">
    <not-found></not-found>
  </div>
                <!-- Modal -->
@@ -112,7 +113,9 @@
 
 
 <script>
+import Avatar from 'vue-avatar'
     export default {
+      
         data(){
             return{
                key : this.$route.params.id,
@@ -205,12 +208,18 @@
                    fire.$on('addtask',()=>{
                      this.afficherTasks();
                  });
+                  
              },
              computed: {
             currentUser() {
                 return this.$store.getters.currentUser
             }
-             }
+             },
+             
+             components: {
+    Avatar
+  },
+
     }
 </script>
 <style scoped>

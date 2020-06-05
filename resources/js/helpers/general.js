@@ -7,9 +7,14 @@ export function initialize(store, router) {
             next('/login');
         } else if(to.path == '/login' && currentUser) {
             next('/home');
-        } else  {
+        } 
+        else if(to.path == '/' && currentUser) {
+            next('/home');
+        }
+        else  {
             next();
         }
+       
     });
 
 /**     axios.interceptors.response.use(null, (error) => {

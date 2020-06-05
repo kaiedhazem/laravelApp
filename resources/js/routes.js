@@ -17,6 +17,7 @@ import task from './components/Task.vue'
 import taskdetail  from './components/taskdetail.vue'
 import Main  from './components/MainApp.vue'
 import Login  from './components/loginForm.vue'
+import detailprofil from './components/DetailProfil.vue'
 export const routes = [
     {path: '/', component: Main ,meta: {requiresAuth: true},children:[
         {path: '/project', component: project , meta: {requiresAuth: true} },
@@ -36,7 +37,8 @@ export const routes = [
         {path: '/detailleReclamation/:id' , component: DetailleReclamation, meta: {requiresAuth: true}},
         {path: '/profile/:id' , component: profile , meta: {requiresAuth: true}},
         {path: '/task/:id' , component: task, meta: {requiresAuth: true}},
-        {path: '/taskdetail/:id' , component: taskdetail, meta: {requiresAuth: true} }
+        {path: '/taskdetail/:id' , component: taskdetail, meta: {requiresAuth: true} },
+        {path: '/detailprofil/:id' , component: detailprofil, meta: {requiresAuth: true} }
         ]
 },
     {path: '/login', component: Login,meta: {requiresAuth: false}

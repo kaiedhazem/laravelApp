@@ -177,11 +177,11 @@ export default {
                     };
                     axios.get('api/afficheclient',axiosConfig).then(({ data }) =>(this.clients = data));
                    },
-               ajouterClient(){  this.$Progress.start()
+               ajouterClient(){  
                 this.form.post('api/ajouterClient').then(()=>{
-                     
+                    // this.$Progress.start()
                     this.form.reset();
-                    this.$Progress.finish()
+                  //  this.$Progress.finish()
                 fire.$emit('ajoutclient');
                 $("#AjouterClient").modal('hide');
 

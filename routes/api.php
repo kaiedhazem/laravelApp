@@ -49,6 +49,7 @@ Route::apiResource('membre','API\UserController');
 Route::post('updateuserconnecte','API\UserController@updateuserconnecté');
 Route::get('/chef','API\UserController@chefprojet');
 Route::get('/chefwP','API\UserController@chefprojetwP');
+Route::get('userprofile/{id}','API\UserController@userprofile');
 
 
 //UserProjet
@@ -140,6 +141,10 @@ Route::get('/Uprojects','API\StatController@Uprojects');
 Route::get('/Ustats','API\StatController@Ustats');
 Route::get('/Utasks','API\StatController@Utasks');
 Route::get('/Cprojets','API\StatController@Cprojets');
+Route::get('/Cprojet','API\StatController@projetsclient');
+Route::get('/Ucomplaint','API\StatController@complaints'); 
+Route::get('/Nprojectsc','API\StatController@NprojectsC');
+Route::get('/NcomplaintsC','API\StatController@NcomplaintsC');
 //});
 
 Route::get('/data/{id}', 'API\GanttController@get');

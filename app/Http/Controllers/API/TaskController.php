@@ -10,7 +10,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use DB;
 use phpDocumentor\Reflection\Types\Boolean;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewTask;
+use App\Notifications\NewTaskForYou;
 class TaskController extends Controller
 {
 	//
@@ -131,6 +133,9 @@ class TaskController extends Controller
 	   'projet' => $projet->name,
 	   );
 	   $user->notify(new NewTask($data));
+	   $when = now()->addSeconds(10);
+	   Notification::send($user,(new NewTaskForYou ($data))->delay($when));
+	  
     }
     public function hasparent(){
        $tasks =Task::all();

@@ -39,7 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- Notifications Dropdown Menu -->
-    <Notification> </Notification>
+    <Notification v-if="currentUser.role !== 'client'"> </Notification>
     
 </ul>
     
@@ -50,13 +50,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    
     <router-link to="/home" class="brand-link">
  
- <img src="/img/icon/logo1.png"  class="img-circle elevation-2" alt="User Image">
+ <img src="/img/icon/logo1.png"
+           
+           class="brand-image img-circle elevation-3"
+           style="opacity: .6">
  <span class="brand-text font-weight-light">Project Management</span>
     </router-link>
-</div>
+
+   
+      
+   
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -76,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
               some or any other icon font library -->
 
-               <li class="nav-item" v-show="currentUser.role !== 'admin'">
+               <li class="nav-item" v-show="currentUser.role !== 'admin'" v-if="currentUser.role !== 'client'">
                <router-link :to="`/profile/${currentUser.id}`" class="nav-link">
                  <i class="fas fa-user" style="color:#05dfd7" ></i>
                       <p>
@@ -111,9 +117,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </a>
         <ul class="nav nav-treeview"   >
           <li class="nav-item" v-for="projet in projets" :key="projet.id" v-if="currentUser.role !=='admin' ">
-            <router-link :to="`/task/${projet.id}`" class="nav-link ">
+            <router-link :to="`/task/${projet.id}`" :key="$route.fullPath" class="nav-link ">
+          
               <i class="fas fa-circle" style="color:#05dfd7"> </i>
               <p>Tasks :{{ projet.name }}  </p>
+             
             </router-link>
           </li>
            <li class="nav-item" v-for="projet in projects.projets" :key="projet.id" v-if="currentUser.role==='admin'">
@@ -255,10 +263,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      ########
+      Project Management
     </div>
     <!-- Default to the left -->
-    <strong><a href="#"></a></strong> .
+     <strong>Copyright &copy; 2020 <a href="#"></a>.</strong> All rights
+    reserved.
   </footer>
 </div>
 <!-- ./wrapper -->

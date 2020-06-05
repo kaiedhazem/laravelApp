@@ -332,4 +332,10 @@ public function Membrechefprojet()
     {
         return User::where('role','<>','admin')->latest()->paginate(100);
     }
+    public function userprofile($id){
+        $user = User::find($id);
+        return response()->json([
+        "user" => $user
+        ]);
+    }
 }

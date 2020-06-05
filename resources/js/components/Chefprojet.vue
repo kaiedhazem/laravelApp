@@ -27,7 +27,7 @@
                   <tbody>
 
                     <tr v-for="user in users.Chef.data" :key="user.id">
-                      <td>{{ user.name }}</td>
+                     <router-link :to="`/detailprofil/${user.id}`" style="text-decoration:none; color:black;"> <td>{{ user.name }}</td> </router-link>
                       <td>{{ user.email }}</td>
                       <td>{{ user.phone }}</td>
                       <td>{{ user.created_at | date }}</td>

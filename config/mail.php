@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => 'gestiondeprojetetreclamation@gmail.com',
-        'name' => 'Manarate team',
+        'name' => '¨Project Mangament Team',
     ],
    
     
@@ -88,7 +88,7 @@ return [
 
     'username' => env('MAIL_USERNAME','gestiondeprojetetreclamation@gmail.com'),
 
-    'password' => env('MAIL_PASSWORD','gestiondeprojet@123'),
+    'password' => env('MAIL_PASSWORD','Projectmanagement@manarate123'),
 
     /*
     |--------------------------------------------------------------------------

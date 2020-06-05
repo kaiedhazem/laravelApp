@@ -236,6 +236,7 @@ this.afficherTask();
 this.afficherComments();
 this.showreply();
 this.afficherMembre();
+ 
 },
 mounted() {
   console.log('Component mounted.')

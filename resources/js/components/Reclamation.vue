@@ -4,7 +4,7 @@
             <div class="col-sm-12 mt-4">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> Complains:</h3>
+                <h3 class="card-title"> Complaints:</h3>
                 <div class="card-tools" v-if="currentUser.role === 'client'">
                 <button class="btn btn-success ml-6 mb-3" data-toggle="modal" data-target="#ajouterReclamation" ><i class="fas fa-user"></i> Create </button>
                 </div>

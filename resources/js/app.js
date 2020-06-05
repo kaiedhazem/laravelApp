@@ -69,7 +69,9 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.filter('date',function(datee){
   return moment(datee).format('DD-MM-YYYY');
 });
-
+Vue.filter('firstname',function(name){
+   return name.split(" ")[0];
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

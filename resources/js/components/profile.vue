@@ -39,10 +39,7 @@
                 <p class="text-muted text-center">{{ user.role }}</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Projects</b> <a class="float-right">---</a>
-                  </li>
-
+             
                 </ul>
 
 

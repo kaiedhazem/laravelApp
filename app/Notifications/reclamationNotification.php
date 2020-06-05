@@ -43,7 +43,7 @@ protected $data;
     {
         return (new MailMessage)
                     ->line('New Reclamation about  '. $this->data['projet'] .' project')
-                    ->action('Notification Action', url('/detailleReclamation/'.$this->data['id']))
+                    ->action('New Complaint', url('/detailleReclamation/'.$this->data['id']))
                     ->line('Thank you for using our application!');
     }
 

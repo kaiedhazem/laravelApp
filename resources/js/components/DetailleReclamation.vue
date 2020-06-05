@@ -64,8 +64,9 @@
             <div  v-for="reclamation in reclamations.complain"  v-if=" reclamation.id == key"  :key="reclamation.id">
             <h4 class="info-box-text">Description :</h4>
               <p>{{ reclamation.description }}</p>
-             <h5 class="mt-2  info-box-text"><strong> Project files : </strong></h5>
-             <div  v-for="file in files.files" :key="file.id">
+               <div  v-for="file in files.files" :key="file.id">
+                 <h5 v-if="file.file != null" class="mt-2  info-box-text"><strong> Project files : </strong></h5>
+            
               <ul class="list-unstyled">
                   <div>
                 <li class="row">
@@ -75,6 +76,7 @@
                 </div>
               </ul>
            </div>
+           
                <h4 class="info-box-text"> Advancement:</h4>
                  <p v-if="currentUser.role==='client' && reclamation.avancement == 'Pending Team leader validation' "> In progress  </p>
                  <p v-if="currentUser.role==='client' && reclamation.avancement != 'Pending Team leader validation'"> {{ reclamation.avancement }}  &nbsp; &nbsp;

@@ -4,7 +4,8 @@ use App\Http\Controllers\Controller;
 use App\Projet;
 use App\Task;
 use App\User;
-
+use App\Reclamation;
+use Illuminate\Support\Facades\Auth;
 class StatController extends Controller
 {
     public function __construct()
@@ -64,6 +65,31 @@ class StatController extends Controller
         $project= Projet::where('client_id',Auth()->id())->orderBy('progress','DESC')->latest()->paginate(6);
         return response()->json([
            "projects"=>$project
+        ]) ;
+    }
+    public function  projetsclient(){
+        $project= Projet::where('client_id',Auth()->id())->orderBy('progress','DESC')->get();
+        return response()->json([
+           "projects"=>$project
+        ]) ;
+    }
+    public function  complaints(){
+        $complain= Reclamation::latest()->paginate(6);
+        return response()->json([
+           "comp"=>$complain
+        ]) ;
+    }
+
+    public function NprojectsC(){
+       $projects= Projet::where('client_id',Auth()->id())->count();
+        return response()->json([
+        "projects"=>$projects
+        ]);
+    }
+    public function  NcomplaintsC(){
+        $complain= Reclamation::where('client_id',Auth()->id())->count();
+        return response()->json([
+           "comp"=>$complain
         ]) ;
     }
 }
