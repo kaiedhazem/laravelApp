@@ -138,6 +138,19 @@ class ReclamationController extends Controller
         }
 
     }
+    public function complaintsfileionic(Request $request){
+        $reclamation = Reclamation::latest('updated_at')->first();
+        $file = new Filee;
+   
+        $extention = time().'.'.$request->file->getClientOriginalExtension();
+        $fileName ="complain".'.'.$extention;
+        $request->file->move(public_path('upload'), $fileName);
+        $file->file= $fileName;
+        $file->rec_id=$reclamation->id;
+        $file->save();
+        }
+
+    
     /**
      * Display the specified resource.
      *

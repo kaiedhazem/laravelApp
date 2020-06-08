@@ -114,6 +114,7 @@ Route::get('membretask','API\TaskController@showmembre');
 Route::resource('reclamation','API\ReclamationController');
 Route::get('/complain','API\ReclamationController@complaints');
 Route::post('/complainfile','API\ReclamationController@complaintsfile');
+Route::post('/complainfileionic','API\ReclamationController@complaintsfileionic'); 
 Route::get('/filesComplain/{id}','API\FileController@complaintsfile');
 Route::get('/projetRec','API\ReclamationController@projets');
 Route::post('/reclamationassign/{id}/{membre}','API\ReclamationController@assign');

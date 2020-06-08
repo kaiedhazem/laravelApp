@@ -97,9 +97,12 @@ class UserController extends Controller
         }
        //bloc pour modification des données user connecté
     public function updateuserconnecté(Request $request){
+        $data=$request->all();
         $id=Auth()->user()->id;
         $user=User::find($id);
-        $user->update(['email'=>$request->email,'password'=>bcrypt($request->password)]);
+        $user->email=$data['email'];
+        $user->password=bcrypt($data['password']);
+        $user->save();
     }
 
 
