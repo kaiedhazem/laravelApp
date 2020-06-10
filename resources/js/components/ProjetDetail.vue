@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12 mt-4">
-         <div class="card">
+         <div class="card" v-if="currentUser.role !== 'client'">
         <div class="card-header">
           <h3 class="card-title">Project Detail</h3>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,7 +145,11 @@
                </div>
             </div>
           </div>
+        
         </div>
+          <div v-if="currentUser.role === 'client'">
+   <not-found></not-found>
+ </div>
         <!-- /.card-body -->
       </div>
             </div>
@@ -268,7 +272,12 @@
             this.afficherComments();
             this.showreply();
 
+            },
+            computed: {
+            currentUser() {
+                return this.$store.getters.currentUser
             }
+        },
             }
             </script>
 <style lang="css" scoped>

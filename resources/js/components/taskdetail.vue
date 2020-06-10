@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
          <div class="col-md-12 mt-4">
-         <div class="card">
+         <div class="card" v-if="currentUser.role !== 'client'">
         <div class="card-header">
           <h3 class="card-title">Task Detail</h3>
          </div>
@@ -119,7 +119,11 @@
               </div>
            </div>
             </div>
+  
           </div>
+                    <div v-if="currentUser.role === 'client'">
+   <not-found></not-found>
+ </div>
         </div>
     </div>
         <!-- /.card-body -->
@@ -240,7 +244,12 @@ this.afficherMembre();
 },
 mounted() {
   console.log('Component mounted.')
-}
+},
+  computed: {
+            currentUser() {
+                return this.$store.getters.currentUser
+            }
+        },
 }
 </script>
 <style lang="css" scoped>

@@ -409,7 +409,7 @@ Projects
 <div class="icon">
 <i class="fas fa-user"></i>
 </div>
-<router-link to="/client" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></router-link>
+<router-link to="/reclamation" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></router-link>
 </div>
 </div>
 <section class="col-lg-6">
