@@ -26,6 +26,7 @@ Route::group([
   Route::post('refresh', 'AuthenController@refresh');
   Route::post('me', 'AuthenController@me');
   Route::get('/me','API\AuthenController@me');
+
 });
 
     
@@ -151,4 +152,6 @@ Route::get('/NcomplaintsC','API\StatController@NcomplaintsC');
 Route::get('/data/{id}', 'API\GanttController@get');
 
 Route::get('/data', 'GanttController@get');
+
+Route::get('/verifcomplaint' ,'API\ReclamationController@verifcomplaint');
 

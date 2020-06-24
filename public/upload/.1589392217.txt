@@ -1,1 +1,0 @@
-ionic cordova run android --target=Pixel_2_API_R

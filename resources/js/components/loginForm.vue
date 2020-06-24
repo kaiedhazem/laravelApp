@@ -10,9 +10,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+	
+		
+	
 	<div class="container h-100">
+			<!--img :src="`/img/icon/logos.png`" style="width: 130px; margin-left:200px ;"-->
 		<div class="d-flex justify-content-center h-100">
+		
 			<div class="user_card">
+				
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
 						<img src="/img/icon/logo1.png" class="brand_logo" alt="Logo">
@@ -30,7 +36,7 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input  type="password" v-model="form.password" name="" class="form-control input_pass" value="" placeholder="password">
+							<input  type="password" v-model="form.password" name="" class="form-control input_pass" value="" placeholder="Password">
 						</div>
 						<div class="form-group">
 							<div class="custom-control custom-checkbox">
@@ -52,10 +58,21 @@
                        {{ authError }}
 					</div>
 				</div>
+				
 			</div>
+			
+		
+			
 		</div>
+		
+	    		
 	</div>
-</body>
+<footer>
+  
+   <strong style="float:left ; margin-top:22px; margin-left:529px;"> Copyright  &copy; 2020 <a href="https://manarate.com">Manarate</a>. All rights reserved. </strong>
+   
+</footer>
+	</body>
 </html>
 
 </template>

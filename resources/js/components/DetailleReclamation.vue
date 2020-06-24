@@ -55,6 +55,14 @@
                     </div>
                   </div>
                 </div>
+                 <div class="col-12 col-sm-6">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center">Estimation date</span>
+                      <span class="info-box-number text-center  mb-0">48 Hours</span>
+                    </div>
+                  </div>
+                </div>
             </div>
             <!-- /row -->
             </div>

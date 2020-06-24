@@ -8,11 +8,14 @@ use App\ProjetUser;
 use App\Http\Controllers\BaseController ;
 use App\Http\Controllers\Controller;
 use App\Role;
+use App\Reclamation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewProject;
 use App\Notifications\NewProjectNotification;
+use App\Notifications\ComplaintDelay;
+use Carbon\Carbon;
 use DB;
 class ProjetController extends Controller
 {
@@ -176,6 +179,25 @@ class ProjetController extends Controller
     }
     public function notif()
     {
+        $user1 = auth()->user();
+        $complain= Reclamation::where('employe_id',Auth()->id())->get();
+        foreach( $complain as $rec) {
+
+            $day=((int)$rec->created_at->format('d'))+2;
+      
+           $daynow = Carbon::now()->format('d');
+           error_log($daynow);
+           if ($daynow === '22') {
+
+            $data= array (
+                'id' => $rec->id,
+                
+                );
+                Notification::send($user1,new ComplaintDelay($data));
+           }
+            
+        }
+      
         $user= Auth()->user()->unreadNotifications;
     return response([
         "notification"=>$user

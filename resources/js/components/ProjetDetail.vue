@@ -32,7 +32,49 @@
         </div>
         <div class="card-body" >
           <div class="row"  v-for="projet in projets.project"  v-if=" projet.id == key"  :key="projet.id">
-            <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+            <div class="col-12 col-md-12 col-lg-4 order-2 order-md-1" >
+                <div  v-for="projet in projets.project"  v-if=" projet.id == key"  :key="projet.id">
+              <h3 class="text-primary" style="font-weight:bolder;"> {{ projet.name }}  &nbsp; <small class="badge badge-success" style="float:right; color:#2d132c " > {{ projet.id }}2020 </small> </h3>
+              <p class="">{{ projet.description }}</p>
+              <h4 class="text-primary">Client</h4>
+              <p><u><strong>{{ projet.owner }}</strong></u></p>
+              </div>
+              <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Role/position</th>
+                    </tr>
+                  </thead>
+                   <tbody>
+                   <tr v-for="membre in membres.membres"   :key="membre.id"  >
+                     <td> <img class=" img-circle float-left ml-0" :src="`/img/profile/${ membre.photo }`"
+                      alt="User profile picture" style="width:35px;"></td>
+                     <td> {{ membre.name }}  </td>
+                     <td>{{ membre.role }}</td>
+                   </tr>
+                 </tbody>
+                </table>
+                <form @submit="formSubmit" enctype="multipart/form-data">
+              <h5 class="mt-5 "><strong> Project files </strong><button type="submit"  class="btn btn-sm btn-primary">Add files</button></h5>
+              <div  v-for="file in files.files" :key="file.id">
+              <ul class="list-unstyled">
+                <li>
+                  <a href="" class="btn-link text-secondary"><a style="text-decoration:none; color:black;"  :href="`//127.0.0.1:8000/upload/${file.file}`" target="_blank">
+                   <i class="fas fa-file-alt"></i>{{ file.file }}</a></a>
+                </li>
+              </ul>
+              </div>
+
+                <div class="inline-block" id="upload">
+                <button class="btn" id="btn" >Upload a file</button>
+                <input type="file" name="file" v-on:change="onFileChange"/>
+                </div>
+            <div v-if="errors && errors.file" class="text-danger">{{ errors.file[0] }}</div>
+                 </form>
+               </div>
+            <div class="col-12 col-md-12 col-lg-8 order-1 order-md-2">
               <div class="row">
                 <div class="col-12 col-sm-4">
                   <div class="info-box bg-light">
@@ -101,48 +143,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2" >
-                <div  v-for="projet in projets.project"  v-if=" projet.id == key"  :key="projet.id">
-              <h3 class="text-primary" style="font-weight:bolder;"> {{ projet.name }}</h3>
-              <p class="">{{ projet.description }}</p>
-              <h4 class="text-primary">Client</h4>
-              <p><u><strong>{{ projet.owner }}</strong></u></p>
-              </div>
-              <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Role/position</th>
-                    </tr>
-                  </thead>
-                   <tbody>
-                   <tr v-for="membre in membres.membres"   :key="membre.id"  >
-                     <td> <img class=" img-circle float-left ml-0" :src="`/img/profile/${ membre.photo }`"
-                      alt="User profile picture" style="width:35px;"></td>
-                     <td> {{ membre.name }}  </td>
-                     <td>{{ membre.role }}</td>
-                   </tr>
-                 </tbody>
-                </table>
-                <form @submit="formSubmit" enctype="multipart/form-data">
-              <h5 class="mt-5 "><strong> Project files </strong><button type="submit"  class="btn btn-sm btn-primary">Add files</button></h5>
-              <div  v-for="file in files.files" :key="file.id">
-              <ul class="list-unstyled">
-                <li>
-                  <a href="" class="btn-link text-secondary"><a style="text-decoration:none; color:black;"  :href="`//127.0.0.1:8000/upload/${file.file}`" target="_blank">
-                   <i class="fas fa-file-alt"></i>{{ file.file }}</a></a>
-                </li>
-              </ul>
-              </div>
-
-                <div class="inline-block" id="upload">
-                <button class="btn" id="btn" >Upload a file</button>
-                <input type="file" name="file" v-on:change="onFileChange"/>
-                </div>
-            <div v-if="errors && errors.file" class="text-danger">{{ errors.file[0] }}</div>
-                 </form>
-               </div>
+            
             </div>
           </div>
         
@@ -152,8 +153,37 @@
  </div>
         <!-- /.card-body -->
       </div>
+       <div  id="print">
+               <div  v-for="projet in projets.project"  v-if=" projet.id == key"  :key="projet.id" >
+                  <div class=" ml-2">
+                    <h2 style="color: blue;"> <u> Project Details: </u></h2> <br>
+                    
+                    <h3>{{ projet.id }}2020  </h3>
+                  <label>Name :</label>
+                 <p>{{ projet.name }}  </p>
+                  <label> Description:</label>
+                 <p>{{ projet.description }}</p>
+                      <label> Duration:</label>
+                 <p>{{ projet.duration }}</p>
+                  <label> Budget:</label>
+                 <p>{{ projet.budget }}</p>
+                  <label>Client:</label>
+                <p>{{ projet.owner}}</p>
+                <div  v-for="membre in membres.membres"   :key="membre.id">
+                <label> {{ membre.role }} : </label> <br>
+                 
+                      <img class=" img-circle float-left ml-0" :src="`/img/profile/${ membre.photo }`"
+                      alt="User profile picture" style="width:35px;"> &nbsp; {{ membre.name }} <br> <br> 
+                     </div>
+                          <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
             </div>
+             
+            </div>
+           
         </div>
+         <button class="btn btn-primary hidden-print" v-print="'#print'"> <i class="fas fa-print"></i> Print</button>
     </div>
 </template>
 
@@ -319,6 +349,11 @@
   top: 0;
   opacity: 0;
 }
+
+   #print {display: none;}
+            @media print {
+                #print {display: block;}
+            }
 </style>
 
 

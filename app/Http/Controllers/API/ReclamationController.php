@@ -17,6 +17,8 @@ use App\Notifications\ComplaintProcessed;
 use App\Notifications\ComplaintFinished;
 use App\Notifications\SendComplaintToLeader;
 use App\Notifications\AlertComplaint;
+use App\Notifications\ComplaintDelay;
+use Carbon\Carbon;
 use DB;
 class ReclamationController extends Controller
 {
@@ -141,10 +143,13 @@ class ReclamationController extends Controller
     public function complaintsfileionic(Request $request){
         $reclamation = Reclamation::latest('updated_at')->first();
         $file = new Filee;
-   
-        $extention = time().'.'.$request->file->getClientOriginalExtension();
+        $img = explode(",", $request->file);
+       // $base64data = str_replace(',', '', $img); 
+       //   $imagedata = base64_decode($base64data);
+       // file_put_contents($target_path,$imagedata);
+       $extention = time().'.'.$request->file->getClientOriginalExtension();
         $fileName ="complain".'.'.$extention;
-        $request->file->move(public_path('upload'), $fileName);
+        $request->file->move(public_path('upload'), $img);
         $file->file= $fileName;
         $file->rec_id=$reclamation->id;
         $file->save();
@@ -274,6 +279,28 @@ class ReclamationController extends Controller
                 "complain"=>$complain
              ]);
         }
+    
+    }
+    public function verifcomplaint(){
+           $user = auth()->user();
+            $complain= Reclamation::where('employe_id',Auth()->id())->get();
+            foreach( $complain as $rec) {
+
+                $day=((int)$rec->created_at->format('d'))+2;
+          
+               $daynow = Carbon::now()->format('d');
+               error_log($daynow);
+               if ($daynow === '22') {
+
+                $data= array (
+                    'id' => $rec->id,
+                    
+                    );
+                    Notification::send($user,new ComplaintDelay($data));
+               }
+                
+            }
+          
     
     }
 }

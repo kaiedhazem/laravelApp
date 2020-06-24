@@ -413,7 +413,7 @@ Projects
 </div>
 </div>
 <section class="col-lg-6">
-<div class="card" v-if="(currentUser.role !=='admin' && currentUser.role !=='chef de projet' && currentUser.role !=='client' )">
+<div class="card" v-if="(currentUser.role !=='admin'  && currentUser.role !=='client' )">
 <div class="card-header ui-sortable-handle" style="cursor: move;">
 <h3 class="card-title">
 <i class="ion ion-clipboard mr-1" ></i>
@@ -515,6 +515,60 @@ Complaints
 <!-- /.Left col -->
 <!-- right col -->
 </div>
+<div class="row">
+<section class="col-lg-12 connectedSortable ui-sortable" v-if="currentUser.role ==='chef de projet'" >
+<!-- Custom tabs (Charts with tabs)-->
+<!-- /.card -->
+<!-- DIRECT CHAT -->
+<!--/.direct-chat -->
+<!-- TO DO List -->
+<div class="card">
+<div class="card-header ui-sortable-handle" style="cursor: move;">
+<h3 class="card-title">
+<i class="ion ion-clipboard mr-1"></i>
+Complaints
+</h3>
+<div class="card-tools">
+</div>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th style="width: 10px">#</th>
+<th>Complaints</th>
+<th>Progress</th>
+</tr>
+</thead>
+<tbody>
+<tr v-for="(comp, ind) in comps.comp.data" :key="ind" v-if="comp.chef_id === currentUser.id" >
+<td>{{ ind+1 }}</td>
+<td>{{ comp.description }}
+<b> <small class="badge badge-success" style="float:right; color:#2d132c " > {{ comp.nameProjet }} </small></b>
+</td>
+<td>
+<div class="progress progress-xs">
+<div class="progress-bar progress-bar-danger" :style="{'width':`${parseInt(comp.progress)}%`}"></div>
+</div>
+</td>
+<td><span v-if="`${parseInt(comp.progress)}`==100" class="badge bg-success" >{{ parseInt(comp.progress) }}%</span>
+<span v-if="`${parseInt(comp.progress)}`!=100" class="badge bg-danger" >{{ parseInt(comp.progress) }}%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- /.card-body -->
+<div class="card-footer clearfix">
+</div>
+</div>
+<pagination :data="comps.comp" @pagination-change-page="getResults3"></pagination>
+<!-- /.card -->
+</section>
+
+<!-- /.Left col -->
+<!-- right col -->
+</div>
 <!-- /.row (main row) -->
 </div><!-- /.container-fluid -->
 </section>
@@ -570,6 +624,8 @@ axios.get('api/Cprojets',axiosConfig).then(({data}) => {this.Cprojets=data});
 axios.get('api/Ucomplaint',axiosConfig).then(({data}) => {this.comps=data});
 axios.get('api/Nprojectsc',axiosConfig).then(({data}) => {this.projectsclient=data});
 axios.get('api/NcomplaintsC',axiosConfig).then(({data}) => {this.complaintsclient=data});
+
+
 },
 methods:{
 getResults(page = 1) {

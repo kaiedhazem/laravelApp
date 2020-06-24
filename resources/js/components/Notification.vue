@@ -68,6 +68,7 @@
                             <span class=""></span>  Response of your {{unread.data.task}} task Comment
                         </router-link>
                             </li>
+                            
                              <li v-if="unread.data.typeNotification == 'App\\Notifications\\ComplaintFinished'">
                         <router-link :to="`/detailleReclamation/${unread.data.idrec}`" class="dropdown-item" >
                         <i class="fas fa-check" style="font-size:28px;color:green"></i> &nbsp;
@@ -81,10 +82,17 @@
                                 <span class=""></span> Complaint ready to Verify
                             </router-link>
                                 </li>
+
                                   <li v-if="unread.data.typeNotification == 'App\\Notifications\\AlertComplaint'">
                                 <router-link :to="`/detailleReclamation/${unread.data.idrec}`" class="dropdown-item" >
                                 <i class="fas fa-times-circle" style="font-size:28px;color:red"></i> &nbsp;
                                     <span class=""></span>Complaint not ready to finished
+                                </router-link>
+                                 </li>
+                                      <li v-if="unread.data.typeNotification == 'App\\Notifications\\ComplaintDelay'">
+                                <router-link :to="`/detailleReclamation/${unread.data.idrec}`" class="dropdown-item" >
+                                <i class="fas fa-times-circle" style="font-size:28px;color:red"></i> &nbsp;
+                                    <span class=""></span>Complaint estimation duration 
                                 </router-link>
                                  </li>
                    </div>
