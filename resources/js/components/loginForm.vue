@@ -10,15 +10,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	
-		
-	
+
+
+
 	<div class="container h-100">
 			<!--img :src="`/img/icon/logos.png`" style="width: 130px; margin-left:200px ;"-->
 		<div class="d-flex justify-content-center h-100">
-		
+
 			<div class="user_card">
-				
+
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
 						<img src="/img/icon/logo1.png" class="brand_logo" alt="Logo">
@@ -54,23 +54,27 @@
 						Login In And Join The Team
 
 					</div>
+                    <div class="d-flex justify-content-center links">
+                   <router-link to="/reset-password">Forget Password?</router-link>
+                    </div>
+
 					<div class="d-flex justify-content-center links  error" v-if="authError">
                        {{ authError }}
 					</div>
 				</div>
-				
+
 			</div>
-			
-		
-			
+
+
+
 		</div>
-		
-	    		
+
+
 	</div>
 <footer>
-  
+
    <strong style="float:left ; margin-top:22px; margin-left:529px;"> Copyright  &copy; 2020 <a href="https://manarate.com">Manarate</a>. All rights reserved. </strong>
-   
+
 </footer>
 	</body>
 </html>
@@ -93,7 +97,6 @@ export default {
         methods: {
             authenticate() {
                 this.$store.dispatch('login');
-
                 login(this.$data.form)
                     .then((res) => {
                         this.$store.commit("loginSuccess", res);
@@ -142,7 +145,7 @@ export default {
 			width: 170px;
 			top: -75px;
 			border-radius: 50%;
-			background: #60a3bc;
+			background:#fff;
 			padding: 10px;
 			text-align: center;
 		}
@@ -157,7 +160,7 @@ export default {
 		}
 		.login_btn {
 			width: 100%;
-			background: #092534 !important;
+			background: #343a40 !important;
 			color: white !important;
 		}
 		.login_btn:focus {
@@ -168,7 +171,7 @@ export default {
 			padding: 0 2rem;
 		}
 		.input-group-text {
-			background: #092534 !important;
+			background: #343a40 !important;
 			color: white !important;
 			border: 0 !important;
 			border-radius: 0.25rem 0 0 0.25rem !important;

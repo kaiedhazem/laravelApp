@@ -65,6 +65,7 @@ const Toast = seww.mixin({
   Vue.use(VueProgressBar, options)
   window.Toast=Toast;
 window.fire =new Vue();
+Vue.component('countdowntimer',require('./components/Timer.vue')).default;
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.filter('date',function(datee){
   return moment(datee).format('DD-MM-YYYY');

@@ -7,15 +7,25 @@
               <div class="card-header">
                 <h3 class="card-title">Tasks:</h3>
 
-                <div class="card-tools">
 
+                <div class="card-tools">
+   <div class="form-inline ml-3" style="float:right; border-radius: 20px;">
+                  <div class="input-group input-group-sm">
+                   <input class="form-control form-control-navbar" v-model="searche" type="search" @keyup="search" placeholder="Search" aria-label="Search">
+                 <div class="input-group-append">
+              <button class="btn btn-navbar"  @click.prevent="search" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
                 </div>
               </div>
               <!-- /.card-header -->
              <form >
-              
-   
+
+
                 <table class="table table-hover" >
                   <thead>
                     <tr>
@@ -40,7 +50,7 @@
                        aria-valuemin="`${parseInt(100 * task.progress)}`" :style=" {'width':`${parseInt(100 * task.progress)}%`}" aria-valuemax="100"></div>
                         </div>
                         </td>
-                      <td>{{ task.duration  }} day(s)</td>
+                      <td>{{ task.duration  }} day(s) <CountdownTimer :id="task.id"  :user="task.user_id"  :date="counter(`${task.created_at }`,`${task.duration}`)"></CountdownTimer></td>
                       <td>{{ task.created_at  | date }} </td>
 
                         <td v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
@@ -70,8 +80,9 @@
                         aria-valuemin="$`{parseInt(100 * task.progress)}`" :style=" {'width':`${parseInt(100 * taske.progress)}%`}" aria-valuemax="100"></div>
                         </div>
                         </td>
-                      <td>{{ taske.duration  }} day(s)</td>
-                      <td>{{ taske.created_at  | date }} </td>
+                      <td>{{ taske.duration  }} day(s) &nbsp; <CountdownTimer :id="taske.id"  :user="taske.user_id" :date="counter(`${ taske.created_at }`,`${ taske.duration}`)"></CountdownTimer>   </td>
+                      <td>{{ taske.created_at  | date }}
+                      </td>
 
                         <td v-if=" currentUser.role ==='admin' || currentUser.role ==='chef de projet'">
                                <div class="dropdown">
@@ -96,7 +107,7 @@
                    </tbody>
 
                 </table>
-             
+
               </form>
 
               </div>
@@ -113,11 +124,15 @@
 
 
 <script>
+import CountdownTimer from './Timer.vue'
 import Avatar from 'vue-avatar'
     export default {
-      
+
         data(){
+
             return{
+                countDownDate : new Date("Jan 31, 2021 15:37:25").getDate()+1,
+
                key : this.$route.params.id,
                 form : new Form({
                 id:'',
@@ -127,6 +142,9 @@ import Avatar from 'vue-avatar'
                 tel:'',
                 progress:''
                 }),
+                 now : new Date(),
+                timer : null,
+                endDate:'',
                 tasks:{
                     Tasks:{}
                 },
@@ -149,18 +167,40 @@ import Avatar from 'vue-avatar'
                 warns:[],
                 warn:{
                 },
-                taske:{}
+                taske:{},
+                searche:'',
+
             }
         },
                methods:{
-                   toggle(id) {
-                        const index = this.opened.indexOf(id);
-                    if (index > -1) {
-                        this.opened.splice(index, 1)
-                    } else {
-                        this.opened.push(id)
-                    }
-                    },
+                  counter(x,y){
+                      console.log(x);
+                      console.log(y);
+
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                    ];
+
+                    let zz =  new Date(x).getDate();
+                    var num =parseInt(zz, 10)+parseInt(y, 10);
+//                    console.log(zz);
+
+                    let month=monthNames[ new Date(x).getMonth()];
+  //                  console.log(month)
+                    let year = new Date(x).getFullYear();
+    //                console.log(year);
+               //     let yearee=yeare.toString();
+                 //   console.log(`${month+" "+zz+","+" "+year}`)
+                  //     let month ="June";
+
+                // return StringJoin('%1 %2 ,%3',[month,zz,year]);
+
+               return  `${month+" "+num+","+" "+year}`
+               //return x;
+               },
+                 search(){
+                     fire.$emit('search');
+                 },
                    getResults(page = 1) {
 			axios.get('/api/tasks?page=' + page)
 				.then(response => {
@@ -200,6 +240,11 @@ import Avatar from 'vue-avatar'
            }
              },
              created(){
+                  fire.$on('search',()=>{
+                  let query = this.searche;
+                  axios.get('/api/searcht?s='+query).then(({ data }) =>(this.tasks = data)).catch(()=>{
+            })
+            }),
                 axios.get('/api/hasparent').then(({ data }) =>(this.hasparent = data));
               this.tree();
              //  this.afficherUser();
@@ -208,16 +253,21 @@ import Avatar from 'vue-avatar'
                    fire.$on('addtask',()=>{
                      this.afficherTasks();
                  });
-                  
+
              },
              computed: {
             currentUser() {
                 return this.$store.getters.currentUser
-            }
-             },
-             
-             components: {
-    Avatar
+            },
+
+
+
+
+
+  },
+  components: {
+    CountdownTimer,
+
   },
 
     }

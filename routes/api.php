@@ -26,12 +26,15 @@ Route::group([
   Route::post('refresh', 'AuthenController@refresh');
   Route::post('me', 'AuthenController@me');
   Route::get('/me','API\AuthenController@me');
+  Route::post('resetpassword' ,'API\UserController@resetpass');
+  Route::post('reset-password', 'API\AuthenController@sendPasswordResetLink');
 
+      // handle reset password form process
+      Route::post('reset/password', 'API\AuthenController@callResetPassword');
 });
 
-    
 
-    
+
 
 Route::get('/notif','API\ProjetController@notifications');
 Route::get('/notification','API\ProjetController@notif');
@@ -39,8 +42,8 @@ Route::get('/me','API\AuthenController@guard');
 Route::post('/login','API\AuthenController@login');
 Route::post('/userauth','API\AuthenController@userauth');
 Route::post('/markAsRead','API\ProjetController@MarkUnread') ;
-  
-   
+
+
 Route::apiResource('client' ,'API\UserController@dashbord');
 Route::get('membrep','API\UserController@Membreprojet');
 Route::get('/chef', 'API\UserController@chef');
@@ -115,7 +118,7 @@ Route::get('membretask','API\TaskController@showmembre');
 Route::resource('reclamation','API\ReclamationController');
 Route::get('/complain','API\ReclamationController@complaints');
 Route::post('/complainfile','API\ReclamationController@complaintsfile');
-Route::post('/complainfileionic','API\ReclamationController@complaintsfileionic'); 
+Route::post('/complainfileionic','API\ReclamationController@complaintsfileionic');
 Route::get('/filesComplain/{id}','API\FileController@complaintsfile');
 Route::get('/projetRec','API\ReclamationController@projets');
 Route::post('/reclamationassign/{id}/{membre}','API\ReclamationController@assign');
@@ -144,10 +147,15 @@ Route::get('/Ustats','API\StatController@Ustats');
 Route::get('/Utasks','API\StatController@Utasks');
 Route::get('/Cprojets','API\StatController@Cprojets');
 Route::get('/Cprojet','API\StatController@projetsclient');
-Route::get('/Ucomplaint','API\StatController@complaints'); 
+Route::get('/Ucomplaint','API\StatController@complaints');
 Route::get('/Nprojectsc','API\StatController@NprojectsC');
 Route::get('/NcomplaintsC','API\StatController@NcomplaintsC');
 //});
+
+//delay
+Route::get('/sendalert/{idt}/{idu}', 'API\TaskController@alert');
+
+Route::get('/delay', 'API\ReclamationController@verifComplaint');
 
 Route::get('/data/{id}', 'API\GanttController@get');
 
@@ -155,3 +163,14 @@ Route::get('/data', 'GanttController@get');
 
 Route::get('/verifcomplaint' ,'API\ReclamationController@verifcomplaint');
 
+//search
+Route::get('/search', 'API\ProjetController@search');
+Route::get('/searchemp', 'API\ProjetController@searchemp');
+Route::get('/searchmembre', 'API\UserController@search');
+Route::get('/searchc', 'API\UserController@searchc');
+Route::get('/searchm', 'API\UserController@searchm');
+Route::get('/searcht', 'API\UserController@searcht');
+
+//resetpass
+
+Route::post('resetpassword' ,'API\UserController@resetpass');

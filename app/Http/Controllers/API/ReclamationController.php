@@ -20,6 +20,7 @@ use App\Notifications\AlertComplaint;
 use App\Notifications\ComplaintDelay;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Input;
 class ReclamationController extends Controller
 {
     public function __construct()
@@ -162,8 +163,6 @@ class ReclamationController extends Controller
             ]);
          }
         }
-
-    
     /**
      * Display the specified resource.
      *
@@ -279,7 +278,7 @@ class ReclamationController extends Controller
     }
     public function reclamationmobile(){
         $user= Auth()->user();
-       
+
        if ($user->role === 'client')
         {
             $complain= Reclamation::where('client_id',Auth()->id())->get();
@@ -287,28 +286,29 @@ class ReclamationController extends Controller
                 "complain"=>$complain
              ]);
         }
-    
+
     }
-    public function verifcomplaint(){
+    public function verifComplaint(){
            $user = auth()->user();
             $complain= Reclamation::where('employe_id',Auth()->id())->get();
             foreach( $complain as $rec) {
 
-                $day=((int)$rec->created_at->format('d'))+2;
-          
-               $daynow = Carbon::now()->format('d');
-               error_log($daynow);
-               if ($daynow === '22') {
+                $day =((int)$rec->created_at->format('d'))+2;
 
+               $daynow = Carbon::now()->format('d');
+            
+               error_log($daynow);
+
+               if ( $day >= '09' && $rec->advancement !='Finished' ) {
                 $data= array (
                     'id' => $rec->id,
-                    
                     );
                     Notification::send($user,new ComplaintDelay($data));
                }
-                
             }
-          
-    
+        return response()->json([
+            "complaint send"
+        ]);
+
     }
 }
