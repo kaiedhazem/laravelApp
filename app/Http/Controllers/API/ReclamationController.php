@@ -143,16 +143,24 @@ class ReclamationController extends Controller
     public function complaintsfileionic(Request $request){
         $reclamation = Reclamation::latest('updated_at')->first();
         $file = new Filee;
-        $img = explode(",", $request->file);
-       // $base64data = str_replace(',', '', $img); 
-       //   $imagedata = base64_decode($base64data);
-       // file_put_contents($target_path,$imagedata);
-       $extention = time().'.'.$request->file->getClientOriginalExtension();
+        $destinationPath = 'upload/';
+        $newImageName='MyImage500.jpg';
+        $extention = time().'.'.$request->file->getClientOriginalExtension();
         $fileName ="complain".'.'.$extention;
-        $request->file->move(public_path('upload'), $img);
+        if ($request->file('file')) {
+        $request->file('file')->move($destinationPath,$fileName);
         $file->file= $fileName;
         $file->rec_id=$reclamation->id;
         $file->save();
+         return response()->json([
+            "action"=>"Complaint added succesfully"
+        ]);
+         }
+         else {
+            return response()->json([
+                "action"=>"Problem in uploiding file"
+            ]);
+         }
         }
 
     
